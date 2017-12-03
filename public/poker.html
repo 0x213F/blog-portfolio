@@ -1,0 +1,74 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="josh" class="player">
+            <button data="5">5</button>
+            <button data="10">10</button>
+            <button data=25>25</button>
+            <button data="50">50</button>
+            <button data="100">100</button>
+            <span class="name">JOSH</span>
+            <span class="bank">1000</span>
+        </div>
+        <div id="soham" class="player">
+            <button data="5">5</button>
+            <button data="10">10</button>
+            <button data=25>25</button>
+            <button data="50">50</button>
+            <button data="100">100</button>
+            <span class="name">SOHAM</span>
+            <span class="bank">1000</span>
+        </div>
+
+        <div class="table">
+            <span id="game0" class="pot">0</span>
+            <button id="joshwin">joshwin</span>
+            <button id="sohamwin">sohamwin</span>
+        </div>
+
+        <!--   :(   -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.js"></script>
+
+        <script>
+            $("button").on("click", function() {
+
+                // bad hack
+                if($(this).attr("id") === "joshwin" || $(this).attr("id") === "sohamwin") {
+                    return;
+                }
+
+                // real function starts here
+                var $player = $(this).parent();
+                var bank = $player.find(".bank").text();
+                var bet = $(this).attr("data");
+                var $game = $("#game0");
+
+                if(Number(bet) > Number(bank)) {
+                    return // error
+                }
+
+                $game.text(Number($game.text()) + Number(bet));
+                $player.find(".bank").text(Number(bank) - Number(bet));
+                console.log($(this).attr("data"));
+            })
+
+            $("#sohamwin").on("click", function() {
+                var pot = Number($("#game0").text());
+                var money = Number($("#soham").find(".bank").text());
+                console.log(money, pot)
+                $("#soham").find(".bank").text(money + pot);
+                $("#game0").text("0");
+            });
+
+            $("#joshwin").on("click", function() {
+                var pot = Number($("#game0").text());
+                var money = Number($("#josh").find(".bank").text());
+                console.log(money, pot)
+                $("#josh").find(".bank").text(money + pot);
+                $("#game0").text("0");
+            });
+        </script>
+    </body>
+</html>
